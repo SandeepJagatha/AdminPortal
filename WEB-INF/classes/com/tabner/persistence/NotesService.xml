@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tabner.persistence.NotesService">
+    
+    <resultMap id="notesresult" type="notes">
+        <result property="id" column="id"/>
+        
+        <result property="note_type" column="note_type"/>
+        <result property="note_details" column="note_details"/>
+        <result property="activity_id" column="activity_id"/>
+        
+        <result property="created" column="created"/>
+        <result property="created_by" column="created_by"/>
+        <result property="last_updated" column="last_updated"/>
+        <result property="last_updated_by" column="last_update_by"/>
+    </resultMap>
+	
+	<select id="getAllNotes" resultMap="notesresult">  
+		SELECT id, note_type,  note_details, activity_id, created, created_by, last_updated, last_updated_by
+		FROM notes; 
+	</select>
+
+	<select id="getNoteById" resultMap="notesresult">  
+		SELECT id, note_type,  note_details, activity_id, created, created_by, last_updated, last_updated_by
+		FROM notes
+		where id = #{id}; 
+	</select>
+	
+	<select id="getNotesByActivityId" resultMap="notesresult">  
+		SELECT id, note_type,  note_details, activity_id, created, created_by, last_updated, last_updated_by
+		FROM notes
+		where activity_id = #{aid}; 
+	</select>
+	
+
+	<insert id="saveNote" parameterType="notes">
+		INSERT INTO notes (note_type,  note_details, activity_id, created_by, last_updated_by) 
+    	VALUE (#{note_type},#{note_details},#{activity_id},#{created_by},#{last_updated_by})
+	</insert>
+	
+ 	<update id="updateNote" parameterType="notes"> 
+  		UPDATE notes
+  		SET
+  			note_type = #{note_type},  
+  			note_details = #{note_details},
+  			activity_id = #{activity_id},  	
+  			last_updated_by = #{last_updated_by}
+  		where id = #{id} 
+	</update>
+	
+	<delete id="deleteNote" parameterType="String">
+    	DELETE FROM notes
+    	WHERE id = #{id}
+    </delete>
+</mapper>

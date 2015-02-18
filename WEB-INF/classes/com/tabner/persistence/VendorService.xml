@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tabner.persistence.VendorService">
+    
+    <resultMap id="vendorresult" type="vendors">
+        <result property="id" column="id"/>
+        <result property="par_row_id" column="par_row_id"/>
+        <result property="created" column="created"/>
+        <result property="created_by" column="created_by"/>
+        <result property="last_updated" column="last_updated"/>
+        <result property="last_updated_by" column="last_update_by"/>
+        
+        <result property="vname" column="vname"/>
+        <result property="contact_person" column="contact_person"/>
+        <result property="ph_num_primary" column="ph_num_primary"/>
+        <result property="ph_num_secondary" column="ph_num_secondary"/>
+        <result property="email_addr" column="email_addr"/>
+        <result property="website" column="website"/>
+        <result property="payment_term" column="payment_term"/>
+    </resultMap>
+	
+ 	<select id="getAllVendors" resultMap="vendorresult">  
+		SELECT id, par_row_id, vname, contact_person, ph_num_primary, ph_num_secondary, email_addr, website, payment_term, created, created_by, last_updated, last_updated_by
+		FROM vendor; 
+	</select>
+
+	<select id="getVendorByEid" resultMap="vendorresult">  
+		SELECT id, par_row_id, vname, contact_person, ph_num_primary, ph_num_secondary, email_addr, website, payment_term, created, created_by, last_updated, last_updated_by
+		FROM vendor
+		where par_row_id = #{empid}; 
+	</select> 
+
+	<insert id="saveVendor" parameterType="vendors">
+		INSERT INTO vendor (par_row_id, created_by, last_updated_by, vname, contact_person, ph_num_primary, ph_num_secondary, email_addr, website, payment_term) 
+    	VALUE (#{par_row_id},#{created_by},#{last_updated_by}, #{vname}, #{contact_person}, #{ph_num_primary}, #{ph_num_secondary}, #{email_addr}, #{website}, #{payment_term})
+	</insert>
+	
+ 	<update id="updateVendor" parameterType="vendor"> 
+  		UPDATE vendor
+  		SET
+  			vname = #{vname},  
+  			contact_person = #{contact_person},
+  			ph_num_primary = #{ph_num_primary},
+  			ph_num_secondary = #{ph_num_secondary},
+  			email_addr = #{email_addr},  			
+  			website = #{website},
+  			payment_term = #{payment_term},  			
+  			last_updated_by = #{last_updated_by}		
+  		where id = #{id} 
+	</update>
+
+	<delete id="deleteVendor" parameterType="int">
+    	DELETE FROM vendor
+    	WHERE id = #{id}
+    </delete>  
+</mapper>

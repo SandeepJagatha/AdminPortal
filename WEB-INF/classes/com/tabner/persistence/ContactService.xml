@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tabner.persistence.ContactService">
+    
+    <resultMap id="contactresult" type="contact">
+        <result property="id" column="id"/>
+        <result property="par_row_id" column="par_row_id"/>
+        <result property="created" column="created"/>
+        <result property="created_by" column="created_by"/>
+        <result property="last_updated" column="last_updated"/>
+        <result property="last_updated_by" column="last_update_by"/>
+        
+        <result property="first_name" column="first_name"/>
+        <result property="middle_name" column="middle_name"/>
+        <result property="last_name" column="last_name"/>
+        <result property="email_work" column="email_work"/>
+        <result property="email_personal" column="email_personal"/>
+        <result property="work_ph_num" column="work_ph_num"/>
+        <result property="cell_ph_num" column="cell_ph_num"/>
+        <result property="job_title" column="job_title"/>
+        <result property="org_name" column="org_name"/>
+    </resultMap>
+	
+  	<select id="getAllContacts" resultMap="contactresult">  
+		SELECT id, par_row_id, first_name, middle_name, last_name, email_work, email_personal, work_ph_num, cell_ph_num, job_title, org_name, created, created_by, last_updated, last_updated_by
+		FROM contact; 
+	</select>
+
+	<select id="getContactByEid" resultMap="contactresult">  
+		SELECT id, par_row_id, first_name, middle_name, last_name, email_work, email_personal, work_ph_num, cell_ph_num, job_title, org_name, created, created_by, last_updated, last_updated_by
+		FROM contact
+		where par_row_id = #{empid}; 
+	</select> 
+
+	<insert id="saveContact" parameterType="contact">
+		INSERT INTO contact (par_row_id, created_by, last_updated_by, first_name, middle_name, last_name, email_work, email_personal, work_ph_num, cell_ph_num, job_title, org_name) 
+    	VALUE (#{par_row_id},#{created_by},#{last_updated_by}, #{first_name}, #{middle_name}, #{last_name}, #{email_work}, #{email_personal}, #{work_ph_num}, #{cell_ph_num}, #{job_title}, #{org_name})
+	</insert>
+	
+ 	<update id="updateContact" parameterType="contact"> 
+  		UPDATE contact
+  		SET
+  			first_name = #{first_name},  
+  			middle_name = #{middle_name},
+  			last_name = #{last_name},
+  			email_work = #{email_work},
+  			email_personal = #{email_personal},  			
+  			work_ph_num = #{work_ph_num},
+  			cell_ph_num = #{cell_ph_num},  			
+  			job_title = #{job_title},	
+  			org_name = #{org_name},	
+  			last_updated_by = #{last_updated_by}		
+  		where id = #{id} 
+	</update>
+
+	<delete id="deleteContact" parameterType="int">
+    	DELETE FROM contact
+    	WHERE id = #{id}
+    </delete>  
+</mapper>

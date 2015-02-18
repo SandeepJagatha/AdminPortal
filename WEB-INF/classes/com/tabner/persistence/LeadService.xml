@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tabner.persistence.LeadService">
+    
+    <resultMap id="leadresult" type="lead">
+        <result property="lid" column="lid"/>
+        <result property="first_name" column="first_name"/>
+        <result property="middle_name" column="middle_name"/>
+        <result property="last_name" column="last_name"/>
+        <result property="email_work" column="email_work"/>
+        <result property="email_personal" column="email_personal"/>
+        <result property="home_ph_num" column="home_ph_num"/>
+        <result property="work_ph_num" column="work_ph_num"/>        
+        <result property="cell_ph_num" column="cell_ph_num"/>
+        
+        <result property="technology" column="technology"/>
+        <result property="ltype" column="ltype"/>
+        <result property="cur_designation" column="cur_designation"/>
+        <result property="cur_sal" column="cur_sal"/>
+        <result property="cur_org" column="cur_org"/>
+        <result property="cur_status" column="cur_status"/>
+        <result property="cur_emp_type" column="cur_emp_type"/>
+        <result property="expected_sal" column="expected_sal"/>
+        <result property="gender" column="gender"/>
+        <result property="marital_status" column="marital_status"/>
+        <result property="applied_for" column="applied_for"/>
+        <result property="assign_to" column="assign_to"/>
+        <result property="exp" column="exp"/>
+        <result property="channel" column="channel"/>
+        <result property="c_name" column="c_name"/>
+        
+        <result property="loc_constraint" column="loc_constraint"/>
+        <result property="loc_state" column="loc_state"/>
+        <result property="loc_city" column="loc_city"/>
+        
+        <result property="created" column="created"/>
+        <result property="created_by" column="created_by"/>
+        <result property="last_updated" column="last_updated"/>
+        <result property="last_updated_by" column="last_update_by"/>
+    </resultMap>
+	
+	<select id="getAllLeads" resultMap="leadresult">  
+		SELECT lid,first_name, middle_name, last_name, email_work, email_personal, home_ph_num, work_ph_num, cell_ph_num, 
+		technology, ltype, cur_designation, cur_sal, cur_org, cur_status, cur_emp_type, created, created_by, last_updated, last_updated_by, expected_sal, gender, marital_status, applied_for, assign_to,  exp, channel, c_name, loc_constraint, loc_state, loc_city
+		FROM lead; 
+	</select>
+
+	<select id="getLeadById" resultMap="leadresult">  
+		SELECT lid,first_name, middle_name, last_name, email_work, email_personal, home_ph_num, work_ph_num, cell_ph_num, 
+		technology, ltype, cur_designation, cur_sal, cur_org, cur_status, cur_emp_type, created, created_by, last_updated, last_updated_by, expected_sal, gender, marital_status, applied_for, assign_to,  exp, channel, c_name, loc_constraint, loc_state, loc_city
+		FROM lead
+		where lid = #{lid}; 
+	</select>
+
+	<insert id="saveLead" parameterType="lead">
+		INSERT INTO lead (first_name, middle_name, last_name, email_work, email_personal, home_ph_num, work_ph_num, cell_ph_num, 
+		technology, ltype, cur_designation, cur_sal, cur_org, cur_status, cur_emp_type, created_by, last_updated_by, expected_sal, gender, marital_status, applied_for, assign_to,  exp, channel, c_name, loc_constraint, loc_state, loc_city) 
+    	VALUE (#{first_name},#{middle_name},#{last_name},#{email_work},#{email_personal},#{home_ph_num},#{work_ph_num},#{cell_ph_num},
+    	#{technology},#{ltype},#{cur_designation},#{cur_sal},#{cur_org},#{cur_status},#{cur_emp_type},#{created_by},#{last_updated_by},#{expected_sal},
+    	#{gender},#{marital_status},#{applied_for},#{assign_to},#{exp},#{channel},#{c_name},#{loc_constraint},#{loc_state},#{loc_city})
+    	
+		<selectKey resultType="java.lang.String" keyProperty="lid" order="AFTER" >
+		  select lid from lead order by created desc limit 1
+		</selectKey>
+	</insert>
+	
+ 	<update id="updateLead" parameterType="lead"> 
+  		UPDATE lead
+  		SET
+  			first_name = #{first_name},  
+  			middle_name = #{middle_name},
+  			last_name = #{last_name},
+  			email_work = #{email_work},  			
+  			email_personal = #{email_personal},
+  			home_ph_num = #{home_ph_num},
+  			work_ph_num = #{work_ph_num},
+  			cell_ph_num = #{cell_ph_num},  			
+  			technology = #{technology},
+  			ltype = #{ltype},
+  			cur_designation = #{cur_designation},
+  			cur_sal = #{cur_sal},  			
+  			cur_org = #{cur_org},
+  			cur_status = #{cur_status},
+  			last_updated_by = #{last_updated_by},
+  			cur_emp_type = #{cur_emp_type},
+  			expected_sal = #{expected_sal},  			
+  			gender = #{gender},
+  			marital_status = #{marital_status},  			
+  			applied_for = #{applied_for},
+  			assign_to = #{assign_to},
+  			exp = #{exp},
+  			channel = #{channel},
+  			c_name = #{c_name},  			
+  			loc_constraint = #{loc_constraint},
+  			loc_state = #{loc_state},  			
+  			loc_city = #{loc_city}
+  		where lid = #{lid} 
+	</update>
+	
+	<delete id="deleteLead" parameterType="int">
+    	DELETE FROM lead
+    	WHERE lid = #{lid}
+    </delete>
+</mapper>

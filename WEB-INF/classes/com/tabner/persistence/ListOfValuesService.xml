@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tabner.persistence.ListOfValuesService">
+    
+    <resultMap id="listofvaluesresult" type="listofvalues">
+        <result property="id" column="id"/>
+        
+        <result property="list_type" column="list_type"/>
+        <result property="list_value" column="list_value"/>
+        <result property="list_seq" column="list_seq"/>
+        <result property="list_subvalue" column="list_subvalue"/>
+        <result property="active_flag" column="active_flag"/>
+        
+        <result property="created" column="created"/>
+        <result property="created_by" column="created_by"/>
+        <result property="last_updated" column="last_updated"/>
+        <result property="last_updated_by" column="last_update_by"/>
+    </resultMap>
+	
+	<select id="getListOfValues" resultMap="listofvaluesresult">  
+		SELECT id,list_type, list_value, list_seq, list_subvalue, active_flag, created, created_by, last_updated, last_updated_by
+		FROM list_of_values; 
+	</select>
+
+	<select id="getListOfValuesByListType" resultMap="listofvaluesresult">  
+		SELECT id,list_type, list_value, list_seq, list_subvalue, active_flag, created, created_by, last_updated, last_updated_by
+		FROM list_of_values
+		where list_type = #{list_type} and active_flag = 1
+		order by list_seq; 
+	</select>
+	
+	<select id="getListOfValuesById" resultMap="listofvaluesresult">   
+		SELECT id,list_type, list_value, list_seq, list_subvalue, active_flag, created, created_by, last_updated, last_updated_by
+		FROM list_of_values
+		where id = #{id}; 
+	</select>
+	
+
+	<insert id="saveListOfValues" parameterType="listofvalues">
+		INSERT INTO list_of_values (list_type, list_value, list_seq, list_subvalue, active_flag, created_by, last_updated_by) 
+    	VALUE (#{list_type},#{list_value},#{list_seq},#{list_subvalue},#{active_flag},#{created_by},#{last_updated_by})
+	</insert>
+	
+ 	<update id="updateListOfValues" parameterType="listofvalues"> 
+  		UPDATE list_of_values
+  		SET
+  			list_value = #{list_value},
+  			list_seq = #{list_seq},
+  			list_subvalue = #{list_subvalue},  			
+  			active_flag = #{active_flag},
+  			last_updated_by = #{last_updated_by}
+  		where id = #{id} 
+	</update>
+	
+	<delete id="deleteListOfValues" parameterType="int">
+    	DELETE FROM list_of_values
+    	WHERE id = #{id}
+    </delete>
+</mapper>

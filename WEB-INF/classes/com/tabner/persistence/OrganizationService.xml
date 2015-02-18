@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tabner.persistence.OrganizationService">
+    
+    <resultMap id="organizationresult" type="org">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="created" column="created"/>
+        <result property="created_by" column="created_by"/>
+        <result property="last_updated" column="last_updated"/>
+        <result property="last_updated_by" column="last_update_by"/>
+    </resultMap>
+	
+ 	<select id="getAllOrgs" resultMap="organizationresult">  
+		SELECT id,name, created, created_by, last_updated, last_updated_by, description
+		FROM organization; 
+	</select>
+	
+	<select id="getOrgById" resultMap="organizationresult">  
+		SELECT id,name, created, created_by, last_updated, last_updated_by, description
+		FROM organization
+		where id=#{oid}; 
+	</select>
+	
+	<insert id="saveOrg" parameterType="org">
+		INSERT INTO organization (name, description, created_by, last_updated_by) 
+    	VALUE (#{name},#{description},#{created_by},#{last_updated_by})
+	</insert>
+	
+ 	<update id="updateOrg" parameterType="org"> 
+  		UPDATE organization
+  		SET
+  			name = #{name},  
+  			last_updated_by = #{last_updated_by},
+  			description = #{description}
+  		where id = #{id} 
+	</update>
+
+	<delete id="deleteOrg" parameterType="int">
+    	DELETE FROM organization
+    	WHERE id = #{id}
+    </delete> 
+</mapper>

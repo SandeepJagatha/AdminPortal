@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tabner.persistence.AddressService">
+    
+    <resultMap id="addressresult" type="address">
+        <result property="id" column="id"/>
+        <result property="par_row_id" column="par_row_id"/>
+        <result property="addr_type" column="addr_type"/>
+        <result property="addr_line1" column="addr_line1"/>
+        <result property="addr_line2" column="addr_line2"/>
+        <result property="addr_line3" column="addr_line3"/>
+        <result property="city" column="city"/>
+        <result property="country" column="country"/>
+        <result property="county" column="county"/>
+        <result property="district" column="district"/>
+        <result property="state" column="state"/>
+        <result property="time_zone_cd" column="time_zone_cd"/>
+        <result property="zipcode" column="zipcode"/>
+        <result property="zipcode_ext" column="zipcode_ext"/>
+        <result property="created" column="created"/>
+        <result property="created_by" column="created_by"/>
+        <result property="last_updated" column="last_updated"/>
+        <result property="last_updated_by" column="last_update_by"/>
+    </resultMap>
+	
+ 	<select id="getAllAddresses" resultMap="addressresult">  
+		SELECT id,par_row_id, addr_type, addr_line1, addr_line2, addr_line3, city, country, county, 
+		district, state, time_zone_cd, zipcode, zipcode_ext, created, created_by, last_updated, last_updated_by
+		FROM address; 
+	</select>
+
+	<select id="getAddrByEid" resultMap="addressresult">  
+		SELECT id,par_row_id, addr_type, addr_line1, addr_line2, addr_line3, city, country, county, 
+		district, state, time_zone_cd, zipcode, zipcode_ext, created, created_by, last_updated, last_updated_by
+		FROM address
+		where par_row_id = #{empid}; 
+	</select>
+
+	<insert id="saveAddress" parameterType="address">
+		INSERT INTO address (par_row_id, addr_type, addr_line1, addr_line2, addr_line3, city, country, county, district, state, time_zone_cd, 
+		zipcode, zipcode_ext, created_by, last_updated_by) 
+    	VALUE (#{par_row_id},#{addr_type},#{addr_line1},#{addr_line2},#{addr_line3},#{city},#{country},#{county},#{district},
+    	#{state},#{time_zone_cd},#{zipcode},#{zipcode_ext},#{created_by},#{last_updated_by})
+	</insert>
+	
+ 	<update id="updateAddress" parameterType="tdmin"> 
+  		UPDATE address
+  		SET
+  			addr_type = #{addr_type},  
+  			addr_line1 = #{addr_line1},
+  			addr_line2 = #{addr_line2},
+  			addr_line3 = #{addr_line3},
+  			city = #{city},  			
+  			country = #{country},
+  			county = #{county},
+  			district = #{district},
+  			state = #{state},  			
+  			time_zone_cd = #{time_zone_cd},
+  			zipcode = #{zipcode},
+  			zipcode_ext = #{zipcode_ext},
+  			last_updated_by = #{last_updated_by}		
+  		where id = #{id} 
+	</update>
+
+	<delete id="deleteAddress" parameterType="int">
+    	DELETE FROM address
+    	WHERE id = #{id}
+    </delete> 
+</mapper>

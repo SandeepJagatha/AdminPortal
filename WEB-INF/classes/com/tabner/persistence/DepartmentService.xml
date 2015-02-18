@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tabner.persistence.DepartmentService">
+    
+    <resultMap id="departmentresult" type="department">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="div_id" column="div_id"/>
+        <result property="description" column="description"/>
+        <result property="created" column="created"/>
+        <result property="created_by" column="created_by"/>
+        <result property="last_updated" column="last_updated"/>
+        <result property="last_updated_by" column="last_update_by"/>
+    </resultMap>
+	
+ 	<select id="getAllDepartments" resultMap="departmentresult">  
+		SELECT id,name, description,div_id, created, created_by, last_updated, last_updated_by
+		FROM department; 
+	</select>
+	
+	<select id="getDepartmentsBydid" resultMap="departmentresult">  
+		SELECT id,name, description,div_id, created, created_by, last_updated, last_updated_by
+		FROM department
+		where div_id=#{did}; 
+	</select>
+	
+	<insert id="saveDepartment" parameterType="department">
+		INSERT INTO department (name, description,div_id, created_by, last_updated_by) 
+    	VALUE (#{name},#{description}, #{div_id}, #{created_by},#{last_updated_by})
+	</insert>
+	
+ 	<update id="updateDepartment" parameterType="department"> 
+  		UPDATE department
+  		SET
+  			name = #{name},  
+  			last_updated_by = #{last_updated_by},
+  			description = #{description}
+  		where id = #{id} 
+	</update>
+
+	<delete id="deleteDepartment" parameterType="int">
+    	DELETE FROM department
+    	WHERE id = #{id}
+    </delete> 
+</mapper>

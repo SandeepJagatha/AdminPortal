@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tabner.persistence.ClientService">
+    
+    <resultMap id="clientresult" type="client">
+        <result property="id" column="id"/>
+        <result property="par_row_id" column="par_row_id"/>
+        <result property="created" column="created"/>
+        <result property="created_by" column="created_by"/>
+        <result property="last_updated" column="last_updated"/>
+        <result property="last_updated_by" column="last_update_by"/>
+        
+        <result property="client_name" column="client_name"/>
+        <result property="emp_manager" column="emp_manager"/>
+        <result property="ph_num_primary" column="ph_num_primary"/>
+        <result property="ph_num_secondary" column="ph_num_secondary"/>
+        <result property="email_addr" column="email_addr"/>
+        <result property="lob" column="lob"/>
+        <result property="client_type" column="client_type"/>
+        <result property="website" column="website"/>
+        <result property="payment_term" column="payment_term"/>
+    </resultMap>
+	
+ 	<select id="getAllClients" resultMap="clientresult">  
+		SELECT id, par_row_id, client_name, emp_manager, ph_num_primary, ph_num_secondary, email_addr, lob, client_type, website, payment_term, created, created_by, last_updated, last_updated_by
+		FROM clients; 
+	</select>
+ 
+	<select id="getClientByEid" resultMap="clientresult">  
+		SELECT id, par_row_id, client_name, emp_manager, ph_num_primary, ph_num_secondary, email_addr, lob, client_type, website, payment_term, created, created_by, last_updated, last_updated_by
+		FROM clients
+		where par_row_id = #{empid}; 
+	</select>  
+
+	<insert id="saveClient" parameterType="client">
+		INSERT INTO clients (par_row_id, created_by, last_updated_by, client_name, emp_manager, ph_num_primary, ph_num_secondary, email_addr, lob, client_type, website, payment_term) 
+    	VALUE (#{par_row_id},#{created_by},#{last_updated_by}, #{client_name}, #{emp_manager}, #{ph_num_primary}, #{ph_num_secondary}, #{email_addr}, #{lob}, #{client_type}, #{website}, #{payment_term})
+	</insert>
+	
+ 	<update id="updateClient" parameterType="client"> 
+  		UPDATE clients
+  		SET
+  			client_name = #{client_name},  
+  			emp_manager = #{emp_manager},
+  			ph_num_primary = #{ph_num_primary},
+  			ph_num_secondary = #{ph_num_secondary},
+  			email_addr = #{email_addr},  			
+  			lob = #{lob},
+  			client_type = #{client_type},  			
+  			website = #{website},	
+  			payment_term = #{payment_term},	
+  			last_updated_by = #{last_updated_by}		
+  		where id = #{id} 
+	</update>
+
+	<delete id="deleteClient" parameterType="int">
+    	DELETE FROM clients
+    	WHERE id = #{id}
+    </delete>   
+</mapper>

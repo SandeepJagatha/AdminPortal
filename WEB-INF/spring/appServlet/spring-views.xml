@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean id="simpleStudPdfView" class="com.tabner.controllers.generatepdf.SimpleStudentPDFView"></bean>
+	
+	
+	<bean id="empPdfView" class="com.tabner.view.EmpPDFView"></bean>
+	<bean id="contactsPdfView" class="com.tabner.view.ContactsPDFView"></bean>
+	<bean id="vendorsPdfView" class="com.tabner.view.VendorsPDFView"></bean>
+	<bean id="clientssPdfView" class="com.tabner.view.ClientsPDFView"></bean>
+	<bean id="addressPdfView" class="com.tabner.view.AddressPDFView"></bean>
+	
+	
+</beans>

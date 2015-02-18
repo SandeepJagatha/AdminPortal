@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tabner.persistence.TdminService">
+    
+    <resultMap id="tdminresult" type="tdmin">
+        <result property="id" column="id"/>
+        <result property="email" column="email"/>
+        <result property="firstname" column="firstname"/>
+        <result property="lastname" column="lastname"/>
+        <result property="is_admin" column="is_admin"/>
+    </resultMap>
+	
+	<select id="getAllTdmin" resultMap="tdminresult">  
+		SELECT id,email,firstname,lastname,is_admin, cell_ph_num
+		FROM tdmin; 
+	</select>
+	
+	<select id="getTdminPwd" resultMap="tdminresult">  
+		SELECT id,email,firstname,lastname,is_admin,password
+		FROM tdmin
+		where email = #{email}; 
+	</select>
+	
+	<select id="getTdmin" resultMap="tdminresult">  
+		SELECT id,email,firstname,lastname,is_admin
+		FROM tdmin
+		where email = #{email}; 
+	</select>
+	
+	<select id="getTdminById" resultMap="tdminresult">  
+		SELECT id,email,firstname,lastname,is_admin
+		FROM tdmin
+		where id = #{id}; 
+	</select>
+	
+	
+<!--	<select id="checkLogin" resultMap="tdminresult">  
+		SELECT id,email,firstname,lastname,is_admin
+		FROM tdmin
+		where email = #{email} and password = #{password}; 
+	</select>
+	
+ 	<select id="getTdminByLogin" resultMap="result">  
+		SELECT id,email,password 
+		FROM tdmin; 
+	</select> -->
+	
+	<insert id="saveTdmin" parameterType="tdmin">
+		INSERT INTO tdmin (firstname, lastname, email, password, cell_ph_num, is_admin) 
+    	VALUE (#{firstname},#{lastname},#{email},#{password},#{cell_ph_num},#{is_admin})
+	</insert>
+	
+	<update id="updateTdmin" parameterType="tdmin"> 
+  		UPDATE tdmin
+  		SET
+  			email = #{email},  
+  			firstname = #{firstname},
+  			lastname = #{lastname},
+  			cell_ph_num = #{cell_ph_num},
+  			is_admin = #{is_admin}
+  		where id = #{id} 
+	</update>
+	
+	<update id="updateTdminPwd" parameterType="tdmin"> 
+  		UPDATE tdmin
+  		SET
+  			password = #{password}
+  		where id = #{id} 
+	</update>
+	
+	<delete id="deleteTdmin" parameterType="int">
+    	DELETE FROM tdmin
+    	WHERE id = #{id}
+    </delete>
+</mapper>
