@@ -21,6 +21,8 @@ This web application is designed for Administration Portal to track and store th
  - Invoice
  - Reports
  - Admin(Admin, Settings)
-> Employees menu is to view the list of employees, add, edit and delete the existing employees. In all the menu list of employees, leads, contacts, vendor clients and users are designed with Jquery Datatables with search and sort functionalities. Similarly, other menu like leads, contacts, vendors, clients, admin user has a features like to view the list of records, add, edit and delete. 
+> 
+Employees menu is to view the list of employees, add, edit and delete the existing employees. In all the menu list of employees, leads, contacts, vendor clients and users are designed with Jquery Datatables with search and sort functionalities. Similarly, other menu like leads, contacts, vendors, clients, admin user has a features like to view the list of records, add, edit and delete. 
 Invoice menu is to generate the employee invoice (need to implement). A report menu is to generates the pdf/excel sheets for employees, leads, vendors and clients. Coming to admin menu, It consists of two corresponding sub menus Admin and Settings. Admin sub menu is for grant access to admin users and to add, delete and update.  Settings menu is for adding list of dropdown into DB with preferred sequence order for entire application (ex: Gender, Status, Types, Address types and Contact type etc...)
-> Web App is designed with AJAX calls, a very clear navigation, mobile-ready version, encrypted passwords, good looking graphical interface with responsiveness. 
+> 
+Web App is designed with AJAX calls, a very clear navigation, mobile-ready version, encrypted passwords, good looking graphical interface with responsiveness. 
