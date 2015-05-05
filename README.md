@@ -1,13 +1,13 @@
 # **COMPLETE ADMIN PORTAL**
 ## **Tools Used:**
 >
- 1.JAVA
- 2.Mybatis
- 3.SpringMVC
- 4.Jquery, AJAX, JS and css
- 5.Bootstrap Framework
- 6.MySql DB
- 7.STS(Spring Tool Suite)
+ 1. JAVA
+ 2. Mybatis
+ 3. SpringMVC
+ 4. Jquery, AJAX, JS and css
+ 5. Bootstrap Framework
+ 6. MySql DB
+ 7. STS(Spring Tool Suite)
 
 ## **Description:**
 >
