@@ -1,4 +1,4 @@
-# **COMPLETE ADMIN PORTAL**
+# **Organization ADMIN PORTAL**
 ## **Tools Used:**
 >
  1. JAVA
