@@ -235,228 +235,209 @@
    </div>
    
    
-<script type="text/javascript">
-
-function DeleteEmp(id) {
-	bootbox.confirm("Are you sure?", function(result) {
-		if(result==true){
-			$.post('delete', {"id":id}, function(response) {
-				bootbox.alert(response);
-				$("#EmployeesTable").empty();
-			    var oTable = $('#EmployeesTableResult').dataTable();
-			    oTable.fnDestroy();
-				fetchEmpdata();
-			}); 
-		}
-	}); 
-}
+        < script type = "text/javascript" >
+        function DeleteEmp(id) {
+        bootbox.confirm("Are you sure?", function(result) {
+        if (result == true){
+        $.post('delete', {"id":id}, function(response) {
+        bootbox.alert(response);
+                $("#EmployeesTable").empty();
+                var oTable = $('#EmployeesTableResult').dataTable();
+                oTable.fnDestroy();
+                fetchEmpdata();
+        });
+        }
+        });
+                }
 
 function fillData(id, fname, mname, lname, jobtitle, emailwork, emailper, homeph, workph, cellph, ssn, dob, datejoin, dateend, cob, status, activeflag, termflag, createdby, lupdatedby)
-{
-	$('#addempdiv').show();
-	$('#btn-submit').hide();
-	$('#btn-update').show();
-	
-	$("#id").val(id);
-    
-    $("#createdby").val(createdby);
-    $("#last_updated_by").val(lupdatedby);
-    $("#fname").val(fname);
-    $("#mname").val(mname);
-    $("#lname").val(lname);
-    $("#jobt").val(jobtitle);
-    
-    
-    $("#emailw").val(emailwork);
-    $("#emailp").val(emailper);
-    $("#phhome").val(homeph);
-    $("#workph").val(workph);
-    
-    $("#cellph").val(cellph);
-    $("#ssn").val(ssn);
-    $("#dob").val(dob);
-    $("#dateofjoin").val(datejoin);
-    
-    $("#dateofend").val(dateend);
-    $("#cob").val(cob);
-    $("#status").val(status);    
-    
-    if(activeflag==1)
-    {
-    	$("#active_flag").prop('checked', true); 
-    	$('#active_flag').val('1');
-    }
-    else
-    {
-    	$("#active_flag").prop('checked', false); 
-    	$('#active_flag').val('0');
-    }
-    
-    if(termflag==1)
-    {
-    	$("#terminated_flag").prop('checked', true); 
-    	$('#terminated_flag').val('1');
-    }
-    else
-    {
-    	$("#terminated_flag").prop('checked', false); 
-    	$('#terminated_flag').val('0');
-    }                   
-    //$('#addempform').append("<input type='hidden' name='id' value='"+id+"'/>");
+        {
+        $('#addempdiv').show();
+                $('#btn-submit').hide();
+                $('#btn-update').show();
+                $("#id").val(id);
+                $("#createdby").val(createdby);
+                $("#last_updated_by").val(lupdatedby);
+                $("#fname").val(fname);
+                $("#mname").val(mname);
+                $("#lname").val(lname);
+                $("#jobt").val(jobtitle);
+                $("#emailw").val(emailwork);
+                $("#emailp").val(emailper);
+                $("#phhome").val(homeph);
+                $("#workph").val(workph);
+                $("#cellph").val(cellph);
+                $("#ssn").val(ssn);
+                $("#dob").val(dob);
+                $("#dateofjoin").val(datejoin);
+                $("#dateofend").val(dateend);
+                $("#cob").val(cob);
+                $("#status").val(status);
+                if (activeflag == 1)
+        {
+        $("#active_flag").prop('checked', true);
+                $('#active_flag').val('1');
+        }
+        else
+        {
+        $("#active_flag").prop('checked', false);
+                $('#active_flag').val('0');
+        }
 
-	$("html, body").animate({ scrollTop: 0 }, "slow");
-}
+        if (termflag == 1)
+        {
+        $("#terminated_flag").prop('checked', true);
+                $('#terminated_flag').val('1');
+        }
+        else
+        {
+        $("#terminated_flag").prop('checked', false);
+                $('#terminated_flag').val('0');
+        }
+        //$('#addempform').append("<input type='hidden' name='id' value='"+id+"'/>");
+
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+                }
 
 function fetchEmpdata() {
-	
-	$("#EmployeesTable").empty();
-    var oTable = $('#EmployeesTableResult').dataTable();
-    oTable.fnDestroy();
-	
- 	$.post('../employee/fetch', function(json) {
- 		//alert(json);
- 		//console.log(json);        
- 		var taRow = "";
- 		//$("#EmployeesTable").html("");
- 		$.each(json, function(i, val) {
- 			console.log(val.id);
- 			taRow += "<tr id='"+val.eid+"' >";
-        	taRow += "<td>"+val.first_name+"</td>";
-        	taRow += "<td><a onclick=\"EmpDetails('"+val.eid+"');\"  style='cursor: pointer;'>"+val.last_name+"</a></td>";
-        	taRow += "<td>"+val.job_title+"</td>";
-        	taRow += "<td>"+val.emp_status+"</td>";	
-        	taRow += "<td>"+val.eid+"</td>";
-        	if(val.active_flag==1){
-        		taRow += "<td>Yes</td>";
-        	}else{
-        		taRow += "<td>No</td>";
-        	}
-        	taRow += "<td><button class='btn btn-warning btn-xs' onClick=\"fillData('"+val.eid+"','"+val.first_name+"','"+val.middle_name+"','"+val.last_name+"', \
-        			 '"+val.job_title+"','"+val.email_work+"','"+val.email_personal+"','"+val.home_ph_num+"', \
-        			 '"+val.work_ph_num+"','"+val.cell_ph_num+"','"+val.ssn+"','"+val.dob+"','"+val.date_of_joining+"', \
-        			 '"+val.date_of_ending+"','"+val.country_of_birth+"','"+val.emp_status+"','"+val.active_flag+"','"+val.terminated_flag+"', \
-        			 '"+val.created_by+"','"+val.last_updated_by+"','"+val.eid+"');\">Edit</button></td>";
-        	taRow += "<c:choose><c:when test='${tdmin.is_admin==\"1\"}'><td><button class='btn btn-danger btn-xs' onClick=\"DeleteEmp('"+val.eid+"');\">Delete</button></td></c:when><c:otherwise></c:otherwise></c:choose>";
-            taRow += "</tr>";   	
-            console.log(taRow);
-            $("#EmployeesTableResult").append(taRow);
-            taRow = "";
- 		});
- 		$('#EmployeesTableResult').dataTable({            
-	        "sPaginationType": "bootstrap",
-	        "iDisplayLength": 10
+
+$("#EmployeesTable").empty();
+        var oTable = $('#EmployeesTableResult').dataTable();
+        oTable.fnDestroy();
+        $.post('../employee/fetch', function(json) {
+        //alert(json);
+        //console.log(json);        
+        var taRow = "";
+                //$("#EmployeesTable").html("");
+                $.each(json, function(i, val) {
+                console.log(val.id);
+                        taRow += "<tr id='" + val.eid + "' >";
+                        taRow += "<td>" + val.first_name + "</td>";
+                        taRow += "<td><a onclick=\"EmpDetails('" + val.eid + "');\"  style='cursor: pointer;'>" + val.last_name + "</a></td>";
+                        taRow += "<td>" + val.job_title + "</td>";
+                        taRow += "<td>" + val.emp_status + "</td>";
+                        taRow += "<td>" + val.eid + "</td>";
+                        if (val.active_flag == 1){
+                taRow += "<td>Yes</td>";
+                } else{
+                taRow += "<td>No</td>";
+                }
+                taRow += "<td><button class='btn btn-warning btn-xs' onClick=\"fillData('" + val.eid + "','" + val.first_name + "','" + val.middle_name + "','" + val.last_name + "', \
+        			 '" + val.job_title + "','" + val.email_work + "','" + val.email_personal + "','" + val.home_ph_num + "', \
+        			 '" + val.work_ph_num + "','" + val.cell_ph_num + "','" + val.ssn + "','" + val.dob + "','" + val.date_of_joining + "', \
+        			 '" + val.date_of_ending + "','" + val.country_of_birth + "','" + val.emp_status + "','" + val.active_flag + "','" + val.terminated_flag + "', \
+        			 '" + val.created_by + "','" + val.last_updated_by + "','" + val.eid + "');\">Edit</button></td>";
+                        taRow += "<c:choose><c:when test='${tdmin.is_admin==\"1\"}'><td><button class='btn btn-danger btn-xs' onClick=\"DeleteEmp('" + val.eid + "');\">Delete</button></td></c:when><c:otherwise></c:otherwise></c:choose>";
+                        taRow += "</tr>";
+                        console.log(taRow);
+                        $("#EmployeesTableResult").append(taRow);
+                        taRow = "";
+                });
+                $('#EmployeesTableResult').dataTable({
+        "sPaginationType": "bootstrap",
+                "iDisplayLength": 10
         });
- 
-	});
-}
+        });
+        }
 
 function EmpDetails(empid){
-	//alert(empid);
-	$.post('details', {"empid":empid}, function(response) {
-		//alert(response);
-		$('#container').html(response);
-	});
-}
+//alert(empid);
+$.post('details', {"empid":empid}, function(response) {
+    //alert(response);
+    $('#container').html(response);
+});
+        }
 
 $(document).ready(function(){
-	fetchEmpdata();
-	//EmpDetails(empid);
-	$('#addempbtn').click(function(){
-		$('#addempform')[0].reset();
-		$('#addempdiv').show();
-		$('#btn-update').hide();
-		$('#btn-submit').show();
-	});
-	$('.btn-cnl').click(function(){
-		$('#addempdiv').hide();
-	});
-	
-	$('#active_flag').change(function(){
-		if($(this).is(':checked')){
-	          $(this).val('1');
-	     }else{
-	          $(this).val('0');
-	     }
-		//alert($(this).val());
-	 });
-	$('#terminated_flag').change(function(){
-		if($(this).is(':checked')){
-			 $(this).val('1');
-	     }else{
-	          $(this).val('0');
-	     }
-		//alert($(this).val());
-	 });
-	
-	$('#addempform').submit(function(e) {
-		// will pass the form date using the jQuery serialize function
-		var values = $(this).serialize();
-	    var active_checked = $("#active_flag").is(':checked');
-	    if(!active_checked)
-        {
-        	is_admin = 0;
-        	values += "&active_flag=" + encodeURIComponent(is_admin);
+    fetchEmpdata();
+    //EmpDetails(empid);
+    $('#addempbtn').click(function(){
+        $('#addempform')[0].reset();
+        $('#addempdiv').show();
+        $('#btn-update').hide();
+        $('#btn-submit').show();
+    });
+    $('.btn-cnl').click(function(){
+        $('#addempdiv').hide();
+    });
+    $('#active_flag').change(function(){
+        if ($(this).is(':checked')){
+        $(this).val('1');
+                } else{
+        $(this).val('0');
+                }
+        //alert($(this).val());
+    });
+    $('#terminated_flag').change(function(){
+        if ($(this).is(':checked')){
+            $(this).val('1');
+        } else{
+         $(this).val('0');
         }
-	    var terminated_checked = $("#terminated_flag").is(':checked');
-	    if(!terminated_checked)
-	    {
-	       	is_admin = 0;
-	       	alert('inside term');
-	       	values += "&terminated_flag=" + encodeURIComponent(is_admin);
-	    }		
-	    //alert(values);
-		$.post('addEmployee', values, function(response) {
-			bootbox.alert(response);
-			$('#addempform')[0].reset();
-			$("#EmployeesTable").empty();
-		    var oTable = $('#EmployeesTableResult').dataTable();
-		    oTable.fnDestroy();
-			fetchEmpdata();
-		});
-		e.preventDefault(); // prevent actual form submit and page reload
-	});
-	
-	
-	$('#btn-update').click(function(e) {
-		var values = $('#addempform').serialize();
-		 
-	    var active_checked = $("#active_flag").is(':checked');
-	    if(!active_checked)
+        //alert($(this).val());
+    });
+    $('#addempform').submit(function(e) {
+        // will pass the form date using the jQuery serialize function
+        var values = $(this).serialize();
+        var active_checked = $("#active_flag").is(':checked');
+        if (!active_checked)
         {
-        	val = 0;
-        	values += "&active_flag=" + encodeURIComponent(val);
+        is_admin = 0;
+                values += "&active_flag=" + encodeURIComponent(is_admin);
+                }
+         var terminated_checked = $("#terminated_flag").is(':checked');
+        if (!terminated_checked)
+        {
+            is_admin = 0;
+            alert('inside term');
+            values += "&terminated_flag=" + encodeURIComponent(is_admin);
         }
-	    var terminated_checked = $("#terminated_flag").is(':checked');
-	    if(!terminated_checked)
-	    {
-	       	val = 0;
-	       	values += "&terminated_flag=" + encodeURIComponent(val);
-	    }	    
-	    values += "&id=" + encodeURIComponent($('#id').val());		
-	    //alert(values);
-		$.post('update', values , function(response) {
-			bootbox.alert(response);
-			$('#addempform')[0].reset();
-			$("#EmployeesTable").empty();
-		    var oTable = $('#EmployeesTableResult').dataTable();
-		    oTable.fnDestroy();
-			fetchEmpdata();
-		});		
-		e.preventDefault(); // prevent actual form submit and page reload
-	});
-	
-});	
+        //alert(values);
+        $.post('addEmployee', values, function(response) {
+            bootbox.alert(response);
+            $('#addempform')[0].reset();
+            $("#EmployeesTable").empty();
+            var oTable = $('#EmployeesTableResult').dataTable();
+            oTable.fnDestroy();
+            fetchEmpdata();
+        });
+                e.preventDefault(); // prevent actual form submit and page reload
+    });
+    $('#btn-update').click(function(e) {
+        var values = $('#addempform').serialize();
+        var active_checked = $("#active_flag").is(':checked');
+        if (!active_checked)
+        {
+            val = 0;
+            values += "&active_flag=" + encodeURIComponent(val);
+        }
+        var terminated_checked = $("#terminated_flag").is(':checked');
+        if (!terminated_checked)
+        {
+            val = 0;
+            values += "&terminated_flag=" + encodeURIComponent(val);
+        }
+        values += "&id=" + encodeURIComponent($('#id').val());
+        //alert(values);
+        $.post('update', values, function(response) {
+            bootbox.alert(response);
+            $('#addempform')[0].reset();
+            $("#EmployeesTable").empty();
+            var oTable = $('#EmployeesTableResult').dataTable();
+            oTable.fnDestroy();
+            fetchEmpdata();
+        });
+        e.preventDefault(); // prevent actual form submit and page reload
+    });
+});
+< /script>
 
 
 
-</script>
-   
-   
-   
-   
-</div>
 
-<jsp:include page="templates/footer.jsp"/>     
+< /div>
+
+< jsp:include page = "templates/footer.jsp" / >
 
 
- 
+
